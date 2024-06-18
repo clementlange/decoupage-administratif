@@ -30,22 +30,10 @@ class Department
     #[ORM\OneToMany(mappedBy: 'department', targetEntity: City::class)]
     private Collection $cities;
 
-    #[ORM\OneToMany(mappedBy: 'department', targetEntity: Event::class)]
-    private Collection $events;
-
-    #[ORM\OneToMany(mappedBy: 'department', targetEntity: Structure::class)]
-    private Collection $structures;
-
-    #[ORM\OneToMany(mappedBy: 'department', targetEntity: DirectoryCategory::class)]
-    private Collection $directoryCategories;
-
     public function __construct()
     {
         $this->cities = new ArrayCollection();
-        $this->events = new ArrayCollection();
         $this->createdAt = new \DateTimeImmutable();
-        $this->structures = new ArrayCollection();
-        $this->directoryCategories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -118,96 +106,6 @@ class Department
             // set the owning side to null (unless already changed)
             if ($city->getDepartment() === $this) {
                 $city->setDepartment(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Event>
-     */
-    public function getEvents(): Collection
-    {
-        return $this->events;
-    }
-
-    public function addEvent(Event $event): self
-    {
-        if (!$this->events->contains($event)) {
-            $this->events->add($event);
-            $event->setDepartment($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEvent(Event $event): self
-    {
-        if ($this->events->removeElement($event)) {
-            // set the owning side to null (unless already changed)
-            if ($event->getDepartment() === $this) {
-                $event->setDepartment(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Structure>
-     */
-    public function getStructures(): Collection
-    {
-        return $this->structures;
-    }
-
-    public function addStructure(Structure $structure): self
-    {
-        if (!$this->structures->contains($structure)) {
-            $this->structures->add($structure);
-            $structure->setDepartment($this);
-        }
-
-        return $this;
-    }
-
-    public function removeStructure(Structure $structure): self
-    {
-        if ($this->structures->removeElement($structure)) {
-            // set the owning side to null (unless already changed)
-            if ($structure->getDepartment() === $this) {
-                $structure->setDepartment(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, DirectoryCategory>
-     */
-    public function getDirectoryCategories(): Collection
-    {
-        return $this->directoryCategories;
-    }
-
-    public function addDirectoryCategory(DirectoryCategory $directoryCategory): self
-    {
-        if (!$this->directoryCategories->contains($directoryCategory)) {
-            $this->directoryCategories->add($directoryCategory);
-            $directoryCategory->setDepartment($this);
-        }
-
-        return $this;
-    }
-
-    public function removeDirectoryCategory(DirectoryCategory $directoryCategory): self
-    {
-        if ($this->directoryCategories->removeElement($directoryCategory)) {
-            // set the owning side to null (unless already changed)
-            if ($directoryCategory->getDepartment() === $this) {
-                $directoryCategory->setDepartment(null);
             }
         }
 
